@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MY CLOCK</title>
+  <style>
+  #page {
+  width: 70%;
+  height: 95%;
+  text-align: center;
+  background-color: yellow;
+  border-radius: 150px;
+}
+header{
+  font-size: 24px;
+  line-height: 48px;
+}
+h1, h2, #timeEvent{
+  font-family: cursive;
+}
+p {
+  text-transform: uppercase;
+  font-size: 12px;
+}
+#timeEvent{
+  font-size: 30px;
+  text-transform: uppercase;
+  text-shadow: 2px 2px #000;
+  text-transform: uppercase;
+  margin: -80px 0 100px 0;
+  color: blue;
+}
+div.inline > h1, div.inline > h1 { display: inline; }
+#yourmsg{
+  color: darkblue;
+  font-style: bold;
+}
+button {
+ background-color: green;
+ color: white;
+ font-size: 16px;
+}
+
+  </style>
+  <script type="text/javascript">
+  var noon = 12;
+var evening = 18;
+var jhour = -1;
+var jmin = -1;
+var jmsg = -1;
+var status = 1;
+var time = 1000;
+setInterval( updateClock, time);
+    var showCurrentTime = function()
+    {
+    var clock = document.getElementById('clock');
+    var currentTime = new Date();
+    var hours = currentTime.getHours();
+    var minutes = currentTime.getMinutes();
+    var seconds = currentTime.getSeconds();
+    var meridian = "AM";
+    if (hours >= noon)
+    {
+      meridian = "PM";
+    }
+    if (hours > noon)
+    {
+      hours = hours - 12;
+    }
+    if (minutes < 10)
+    {
+        minutes = "0" + minutes;
+    }
+    if (seconds < 10)
+    {
+        seconds = "0" + seconds;
+    }
+    var clockTime = hours + ':' + minutes + ':' + seconds + " " + meridian + "!";
+    clock.innerText = clockTime;
+    };    
+var updateClock = function() 
+{
+  var htime = new Date().getHours();
+  var mtime = new Date().getMinutes();
+  var timeEventJS = document.getElementById("timeEvent");
+  if (htime == jhour && mtime == jmin)
+  {
+    if(status==1){
+    document.getElementById("yourmsg").innerHTML= "   " + jmsg;
+    document.getElementById("alarming").src = "thanos.gif";
+    music.play();
+    status++;
+    }
+  }
+  else if (htime < noon)
+  {
+    messageText = "Good morning!";
+  }
+  else if (htime >= evening)
+  {
+    messageText = "Good evening!";
+  }
+  else
+  {
+    messageText = "Good afternoon!";
+  }
+  timeEventJS.innerText = messageText;
+  showCurrentTime();
+};
+ 
+ var time = 1000;
+ setInterval( updateClock, time);
+function alarmEvent()
+{
+  status=1;
+  jhour= document.getElementById("dhr").value;
+  jmin= document.getElementById("dmin").value;
+  jmsg = document.getElementById("dmsg").value;
+  document.getElementById("stopalarm").hidden = false;
+}
+function alarmStop()
+{ 
+	music.pause();
+  document.getElementById("stopalarm").hidden = true;
+  document.getElementById("alarming").src = "none";
+    document.getElementById("yourmsg").innerHTML = " ";
+}
+
+  </script>
+</head>
+<body>
+  <div id="page">
+    <header>
+      <h1>NINJA CLOCK</h1>
+    </header>
+    <h2>Tik-Tok Here's the Clock<button id="stopalarm" onclick="alarmStop()" hidden>Stop Alarm</button></h2>
+    
+    <audio controls id="music" hidden="true">
+    	<source src="NarutoMyNname.mp3" type="audio/mp3">
+    </audio>
+
+    <div class="inline"><h1 id="clock">Clock goes here</h1><h1 id="yourmsg"></h1></div>
+    <img id="star" src="ninja.jpg">
+    <img id="alarming">
+    <div id="timeEvent">Current Events</div>
+    <b>Set Hours</b><input type="number" id="dhr"></input>
+    <b>Set Minutes</b><input type="number" id="dmin"></input>
+    <b>Your Message</b><input type="text" id="dmsg"></input>
+    <br/>
+    <button id="submit" onclick="alarmEvent()" >Set Alarm</button>
+    <footer>
+      <p>Never miss a thing</p>
+    </footer>
+  </div>
+</body>
+</html>
